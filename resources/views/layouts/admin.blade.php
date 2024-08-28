@@ -101,8 +101,8 @@
                 <span class="ml-3 item-text">Room Rentals</span>
               </a>
             </li>
-            <li class="nav-item dropdown">
-              <a href="#" data-toggle="collapse" aria-expanded="false" class="nav-link">
+            <li class="nav-item">
+              <a href="/payment" aria-expanded="false" class="nav-link">
                 <i class="fe fe-credit-card fe-16"></i>
                 <span class="ml-3 item-text">Payments</span>
               </a>
@@ -133,12 +133,12 @@
                 <span class="ml-3 item-text">Businesses</span>
               </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="/communities" aria-expanded="false" class="nav-link">
                 <i class="fe fe-users fe-16"></i>
                 <span class="ml-3 item-text">Communities</span>
               </a>
-            </li>
+            </li> --}}
             <li class="nav-item dropdown">
               <a href="/documents" aria-expanded="false" class="nav-link">
                 <i class="fe fe-folder fe-16"></i>
@@ -146,9 +146,15 @@
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a href="#" data-toggle="collapse" aria-expanded="false" class="nav-link">
+              <a href="/newsletter" aria-expanded="false" class="nav-link">
                 <i class="fe fe-folder fe-16"></i>
-                <span class="ml-3 item-text">File Manager</span>
+                <span class="ml-3 item-text">Newsletters</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="/gallery" aria-expanded="false" class="nav-link">
+                <i class="fe fe-folder fe-16"></i>
+                <span class="ml-3 item-text">Gallery Files</span>
               </a>
             </li>
             <li class="nav-item">

@@ -29,12 +29,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-       $data =  $request->validate([
+        $data = $request->validate([
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'password_confirmation' => ['required','string', 'max:255'],
+            'password_confirmation' => ['required', 'string', 'max:255'],
             'phone' => ['string', 'max:255'],
             'address' => ['string', 'max:255'],
             'avatar' => ['string', 'max:255'],
@@ -61,20 +61,39 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // event(new Registered($user));
+        if ($user) {
+            $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
 
-        // Auth::login($user);
+            $response = $stripe->checkout->sessions->create([
+                'line_items' => [
+                    [
+                        'price_data' => [
+                            'currency' => 'gbp',
+                            'product_data' => ['name' => 'individual membership'],
+                            'unit_amount' => $request->fee * 100,
+                        ],
+                        'quantity' => 1,
+                    ],
+                ],
+                'mode' => 'payment',
+                'success_url' => route('success').'?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('cancel'),
+            ]);
 
-        // return redirect(route('dashboard', absolute: false));
-        if($user){
-        sweetalert()->success('Thank you! Your registration is successful');
-
-        return redirect('/');
-        }
-        else{
-            sweetalert()->error('Ooops! Something went wrong');
-
-        return redirect('/');
+            if (isset($response->id) && $response->id != '') {
+                session()->put('product', 'individual membership');
+                session()->put('quantity', 1);
+                session()->put('price', $request->fee);
+                session()->put('currency', 'gbp');
+                session()->put('type', 'membership');
+                return redirect($response->url);
+            } else {
+                return redirect()->route('cancel');
+            }
+        } else {
+            sweetalert()->error('Oops! Something went wrong');
+            return redirect('/');
         }
     }
+
 }

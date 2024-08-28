@@ -19,7 +19,9 @@ class FrontController extends Controller
     public function index()
     {
         $events = Event::latest()->take(3)->get();
-        return view('front.index', compact('events'));
+        $news = Document::where('type', 'news')
+        ->latest()->take(3)->get();
+        return view('front.index', compact('events', 'news'));
     }
     public function about()
     {
@@ -32,7 +34,9 @@ class FrontController extends Controller
     }
     public function news()
     {
-        return view('front.news');
+        $news = Document::where('type', 'news')
+        ->latest()->paginate(12);
+        return view('front.news', compact('news'));
     }
 
     public function contact()
@@ -144,17 +148,54 @@ class FrontController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if($user){
-            sweetalert()->success('Thank you! Your registration is successful');
-    
-            return redirect('/');
+        if ($user) {
+            $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
+
+            $response = $stripe->checkout->sessions->create([
+                'line_items' => [
+                    [
+                        'price_data' => [
+                            'currency' => 'gbp',
+                            'product_data' => ['name' => 'business membership'],
+                            'unit_amount' => $request->fee * 100,
+                        ],
+                        'quantity' => 1,
+                    ],
+                ],
+                'mode' => 'payment',
+                'success_url' => route('success').'?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('cancel'),
+            ]);
+
+            if (isset($response->id) && $response->id != '') {
+                session()->put('product', 'business membership');
+                session()->put('quantity', 1);
+                session()->put('price', $request->fee);
+                session()->put('currency', 'gbp');
+                session()->put('type', 'business membership');
+                return redirect($response->url);
+            } else {
+                return redirect()->route('cancel');
             }
-            else{
-                sweetalert()->error('Ooops! Something went wrong');
-    
+        } else {
+            sweetalert()->error('Oops! Something went wrong');
             return redirect('/');
-            }
+        }
+
+        // if($user){
+        //     sweetalert()->success('Thank you! Your registration is successful');
+    
+        //     return redirect('/');
+        //     }
+        //     else{
+        //         sweetalert()->error('Ooops! Something went wrong');
+    
+        //     return redirect('/');
+        //     }
     }
+
+
+   
 
     /**
      * Display the specified resource.

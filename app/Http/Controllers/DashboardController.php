@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +13,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $revenue = Payment::sum('price');
+
+        $members = User::where('type', 'member')
+        ->orwhere('type', 'business')->count();
+
+        return view('dashboard.index', compact('revenue', 'members'));
     }
 
     /**

@@ -10,7 +10,7 @@
           <strong class="card-title">Create Document</strong>
         </div>
         <div class="card-body">
-          <form method="POST" action="{{ route('createDoc') }}" enctype="multipart/form-data">
+          <form method="POST" action="{{ route('createGallery') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
               <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="form-group mb-2">
-              <button type="submit" class="btn btn-primary">Upload Document</button>
+              <button type="submit" class="btn btn-primary">Create</button>
             </div>
           </form>
         </div>

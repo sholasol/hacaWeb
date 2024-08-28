@@ -65,6 +65,13 @@
                         {{-- <a href="/community" class="dropdown-item">Join Our Community Membership</a> --}}
                     </div>
                 </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gallery</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="/" class="dropdown-item">Event Images</a>
+                        <a href="/" class="dropdown-item">Event Videos</a>
+                    </div>
+                </div>
                 <a href="/contact" class="nav-item nav-link">Contact</a>
                 <a href="/login" class="nav-item nav-link text-primary"><i class="fa fa-user ms-3"></i> Sign In</a>
             </div>

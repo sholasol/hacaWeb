@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
         $name = Auth::user()->firstname;
 
         //sweetalert()->success('Welcome, '. $name);
-        flash()->success($name.', You are welcome.');
+        flash()->success($name. ', You are welcome.');
 
         return redirect()->intended(route('dashboard'));
 

@@ -23,34 +23,38 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
-                    <h1 class="mb-5">Expert Instructors</h1>
+                    <h6 class="section-title bg-white text-center text-primary px-3">Newsletters</h6>
+                    <h1 class="mb-5">Newsletters</h1>
                 </div>
                 <div class="row g-4">
-
-
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item bg-light">
-                            <div class="overflow-hidden">
-                                <img class="img-fluid" src="{{asset('images/pdf.jpg')}}" alt="">
+                    @foreach ($news as $event )
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="card service-wrapper rounded border-0 shadow p-4">
+                            <div class="icon text-center text-custom h1 shadow rounded bg-white">
+                                <img class="uim-svg" src="{{asset('images/news.jpg')}}" alt="">
                             </div>
-                            <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                                <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                    <a class="btn  btn-primary" href="">
-                                        <i class="fa fa-book"></i>
-                                        Read More
+                            <div class="content mt-4">
+                                <h5 class="title">{{$event->title}}</h5>
+                                <p class="text-muted mt-3 mb-0">
+                                    {{substr($event->description, 0, 60)}}
+                                </p>
+                                <div class="mt-3">
+                                    <a>
+                                        <span class="fa fa-calendar mr-5"></span>: {{$event->created_at->DiffForHumans()}}
                                     </a>
+                                    <a href="{{asset('asset/image/'.$event->doc)}}" target="_blank" class="text-custom float-end">Download/Read <i class="mdi mdi-chevron-right"></i></a>
                                 </div>
                             </div>
-                            <div class="text-center p-4">
-                                <h5 class="mb-0">Instructor Name</h5>
-                                <small>Designation</small>
-                            </div>
+                            <div class="big-icon h1 text-custom">
+                                <i class="fa fa-newspaper-o uim-icon fa-2x"></i>
+                                </div>
                         </div>
-                    </div>
+                    </div><!--end col-->
 
-
-
+                    @endforeach
+                </div><!--end row-->
+                <div class="mt-2">
+                    {{$news->links()}}
                 </div>
             </div>
         </div>

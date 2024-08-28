@@ -4,9 +4,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -27,6 +29,13 @@ Route::get('/rent', [FrontController::class, 'rent'])->name('rent');
 Route::get('/business', [FrontController::class, 'business'])->name('business');
 Route::get('/community', [FrontController::class, 'community'])->name('community');
 
+//payment
+Route::get('/pay/{id}', [StripeController::class, 'pay'])->name('payment');
+Route::post('/stripe', [StripeController::class, 'stripe'])->name('stripe');
+Route::get('/success', [StripeController::class, 'success'])->name('success');
+Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
+Route::get('/invoice/{payment_id}', [StripeController::class, 'invoice'])->name('invoice');
+
 Route::post('/contactus', [FrontController::class, 'contactus'])->name('contactus');
 Route::post('/regBiz', [FrontController::class, 'regBiz'])->name('regBiz');
 
@@ -37,6 +46,10 @@ Route::post('/regBiz', [FrontController::class, 'regBiz'])->name('regBiz');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/payment', [MembersController::class, 'payment'])->name('payment');
+    Route::get('/payInvoice/{id}', [MembersController::class, 'payInvoice'])->name('payment.invoice');
+
 
     Route::get('/businesses', [MembersController::class, 'business'])->name('businesses');
     Route::get('/members', [MembersController::class, 'index'])->name('members');
@@ -60,7 +73,16 @@ Route::middleware('auth')->group(function () {
     //document
     Route::get('/documents',[DocumentController::class, 'index'])->name('documents');
     Route::get('/create_document',[DocumentController::class, 'create'])->name('create.document');
+    Route::get('/createnews',[DocumentController::class, 'create_news'])->name('create.news');
+    Route::get('/newsletter',[DocumentController::class, 'newsletter'])->name('newsletter');
     Route::post('/createDoc',[DocumentController::class, 'store'])->name('createDoc');
+    Route::post('/createNews',[DocumentController::class, 'createNews'])->name('createNews');
+
+    //gallery
+    Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+    Route::get('/create_gallery', [GalleryController::class, 'create'])->name('createGallery');
+    Route::get('/edit_gallery/{gallery}/edit', [GalleryController::class, 'edit'])->name('edit.gallery');
+    Route::put('/updateGallery/{gallery}', [GalleryController::class, 'update'])->name('updateGallery');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

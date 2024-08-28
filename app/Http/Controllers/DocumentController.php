@@ -24,6 +24,18 @@ class DocumentController extends Controller
         return view('documents.create');
     }
 
+    public function create_news()
+    {
+        return view('documents.createnews');
+    }
+
+    public function newsletter()
+    {
+        $news = Document::where('type', 'news')
+        ->latest()->paginate(16);
+        return view('documents.newsletter', compact('news'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -48,6 +60,7 @@ class DocumentController extends Controller
         $docm = Document::create([
             'title' => $request->title,
             'date' => $request->date,
+            'type' => 'document',
             'description' => $request->description,
             'doc' => $docPath,
         ]);
@@ -58,6 +71,40 @@ class DocumentController extends Controller
         }else{
             sweetalert()->error('Oops! something went wrong');
             return redirect('create_document');
+        }
+    }
+    public function createNews(Request $request)
+    {
+        $request->validate([
+            'title' => ['required', 'string'],
+            'date' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'doc' => ['required'],
+        ]);
+
+        if ($request->hasFile('doc')) {
+            
+            $doc = $request->file('doc');
+            $docName = time() . '_' . $doc->getClientOriginalName();
+            $docPath = $doc->storeAs('docs', $docName);
+        }else{
+            $docPath='';
+        }
+
+        $docm = Document::create([
+            'title' => $request->title,
+            'date' => $request->date,
+            'type' => 'news',
+            'description' => $request->description,
+            'doc' => $docPath,
+        ]);
+
+        if($docm){
+            sweetalert()->success('Newsletter created successfully');
+            return redirect('/newsletter');
+        }else{
+            sweetalert()->error('Oops! something went wrong');
+            return redirect()->back();
         }
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,20 @@ class MembersController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function payment()
+    {
+        $data = Payment::latest()->get();
+
+        return view('payment.index', compact('data'));
+    }
+
+    public function payInvoice($id)
+    {
+        $payment = Payment::where('id', $id)->first();
+
+        return view('payment.payInvoice', compact('payment'));
     }
 
     /**

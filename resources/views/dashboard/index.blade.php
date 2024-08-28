@@ -13,8 +13,8 @@
                           </span>
                         </div>
                         <div class="col pr-0">
-                          <p class="small text-white mb-0">Monthly Sales</p>
-                          <span class="h3 mb-0 text-white">$1250</span>
+                          <p class="small text-white mb-0">Monthly Revenue</p>
+                          <span class="h3 mb-0 text-white">£ {{number_format($revenue)}}</span>
                           <span class="small">+5.5%</span>
                         </div>
                       </div>
@@ -27,12 +27,12 @@
                       <div class="row align-items-center">
                         <div class="col-3 text-center">
                           <span class="circle circle-sm bg-primary">
-                            <i class="fe fe-16 fe-shopping-cart text-white mb-0"></i>
+                            <i class="fe fe-16 fe-user text-white mb-0"></i>
                           </span>
                         </div>
                         <div class="col pr-0">
-                          <p class="small text-dark mb-0">Orders</p>
-                          <span class="h3 mb-0">1,869</span>
+                          <p class="small text-dark mb-0">Membership</p>
+                          <span class="h3 mb-0">{{number_format($members)}}</span>
                           <span class="small text-success">+16.5%</span>
                         </div>
                       </div>

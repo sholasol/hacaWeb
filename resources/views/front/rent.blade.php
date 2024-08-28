@@ -63,7 +63,7 @@
                                           @endforeach
                                       @endif
                                     </ul>
-                                    <a class="w-100 btn btn-lg btn-primary">Book Room</a>
+                                    <a href="/pay/{{$rent->id}}" class="w-100 btn btn-lg btn-primary">Book Room</a>
                                   </div>
                                 </div>
                           </div>

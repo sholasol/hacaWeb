@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('business_title')->nullable();
             $table->string('website')->nullable();
             $table->string('city')->nullable();
+            $table->string('validity')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -282,7 +282,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                               <div data-mdb-input-init class="form-outline">
-                                <input type="text" name="fee" value="10" id="form3Example2" class="form-control form-control-lg" readonly/>
+                                <input type="number" name="fee" value="10" id="form3Example2" class="form-control form-control-lg" readonly/>
                                 <label class="form-label" for="form3Example2">Fee (£10 per annual)</label>
                                 <x-input-error :messages="$errors->get('fee')" class="mt-2 text-danger" />
                               </div>

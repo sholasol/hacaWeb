@@ -1,16 +1,16 @@
 <x-admin-layout>
     <div class="row align-items-center my-4">
         <div class="col">
-          <h2 class="page-title">Create Document</h2>
+          <h2 class="page-title">Create Newsletter</h2>
         </div>
       </div>
 
     <div class="card shadow mb-4">
         <div class="card-header">
-          <strong class="card-title">Create Document</strong>
+          <strong class="card-title">Create Newsletter</strong>
         </div>
         <div class="card-body">
-          <form method="POST" action="{{ route('createDoc') }}" enctype="multipart/form-data">
+          <form method="POST" action="{{ route('createNews') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
               <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="form-group mb-2">
-              <button type="submit" class="btn btn-primary">Upload Document</button>
+              <button type="submit" class="btn btn-primary">Create Newsletter</button>
             </div>
           </form>
         </div>

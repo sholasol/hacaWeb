@@ -32,11 +32,11 @@
                     @foreach ($docs as $doc)
                         <div class="col-md-4">
                             <div class="card">
-                                <img src="{{asset('images/pdf.jpg')}}" class="card-img-top" alt="...">
+                                <img src="{{asset('images/pdf.jpg')}}" class="card-img-top" alt="{{$doc->title}}">
                                 <div class="card-body">
                                   <h5 class="card-title">{{$doc->title}}</h5>
                                   <p class="card-text">
-                                    {{$doc->description}}
+                                    {{substr($doc->description, 0,80)}}...
                                   </p>
                                   <a href="{{asset('asset/image/'.$doc->doc)}}" target="_blank" class="btn btn-primary">Read More</a>
                                 </div>

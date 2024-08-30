@@ -12,4 +12,10 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = ['name', 'description','date', 'image', 'status'];
+
+
+    public function eventImages()
+    {
+        return $this->hasMany(EventImages::class, 'event_id');
+    }
 }

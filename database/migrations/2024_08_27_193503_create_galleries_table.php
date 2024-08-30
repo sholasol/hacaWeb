@@ -14,17 +14,19 @@ return new class extends Migration
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('file'); // URL to the hosted file
+            $table->string('file')->nullable(); // URL to the hosted file
             $table->string('type')->nullable(); // 'audio', 'video', 'image', etc.
-            $table->integer('length')->nullable();
+            $table->string('length')->nullable();
+            $table->integer('price')->nullable();
             $table->string('format')->nullable(); 
             $table->date('created')->nullable(); 
-            $table->date('published')->nullable(); 
-            $table->boolean('physical_copy')->default(false); 
-            $table->boolean('for_listening')->default(false); 
-            $table->boolean('free_download')->default(false); 
+            $table->date('publish')->nullable(); 
+            $table->string('copy')->default(false); 
+            $table->string('listening')->default(false); 
+            $table->string('download')->default(false); 
             $table->string('download_link')->nullable(); 
-            $table->boolean('digital_sale')->default(false); 
+            $table->string('youtube')->nullable(); 
+            $table->string('digital_sale')->default(false); 
             $table->enum('digital_formats', ['mp4', 'Blu-Ray'])->nullable(); 
             $table->string('sales_link')->nullable(); 
             $table->text('description');

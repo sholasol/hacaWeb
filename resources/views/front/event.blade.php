@@ -25,7 +25,7 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
+                    <h6 class="section-title bg-white text-center text-primary px-3">Events</h6>
                     <h1 class="mb-5">Event Pags</h1>
                 </div>
 
@@ -47,7 +47,7 @@
                                         <a>
                                             <span class="fa fa-calendar mr-5"></span>: {{$event->date}}
                                         </a>
-                                        <a href="javascript:void(0)" class="text-custom float-end">Read More <i class="mdi mdi-chevron-right"></i></a>
+                                        <a href="/eventShow/{{$event->id}}" class="text-custom float-end">Read More <i class="mdi mdi-chevron-right"></i></a>
                                     </div>
                                 </div>
                                 <div class="big-icon h1 text-custom">

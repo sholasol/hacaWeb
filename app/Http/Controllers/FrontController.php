@@ -7,6 +7,8 @@ use App\Models\Front;
 use App\Models\Contact;
 use App\Models\Document;
 use App\Models\Event;
+use App\Models\EventImages;
+use App\Models\Gallery;
 use App\Models\Rental;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -49,22 +51,33 @@ class FrontController extends Controller
         $events = Event::latest()->paginate(9);
         return view('front.event', compact('events'));
     }
+
+    public function video()
+    {
+        $data = Gallery::latest()->paginate(9);
+        return view('front.video', compact('data'));
+    }
     
     public function register()
     {
         return view('front.register');
     }
 
+
     public function community()
     {
         return view('front.community');
     }
+
+
     public function rent()
     {
         $rents = Rental::with('rentalimages')->paginate(5);
 
         return view('front.rent', compact('rents'));
     }
+
+
     public function business()
     {
         return view('front.business');
@@ -200,9 +213,12 @@ class FrontController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Front $cr)
+    public function show($id)
     {
-        //
+        $imgs = EventImages::where('event_id', $id)->get();
+
+        $event = Event::where('id', $id)->first();
+        return view('front.eventShow', compact('event', 'imgs'));
     }
 
     /**

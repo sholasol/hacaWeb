@@ -31,7 +31,7 @@
   </head>
   <body class="vertical  light  ">
     <div class="wrapper">
-      <nav class="topnav navbar navbar-light" style="background-color: #401f07 !important;">
+      <nav class="topnav navbar navbar-light" style="background-color: #3c30ca !important;">
         <button type="button" class="navbar-toggler text-white mt-2 p-0 mr-3 collapseSidebar">
           <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
@@ -154,7 +154,7 @@
             <li class="nav-item dropdown">
               <a href="/gallery" aria-expanded="false" class="nav-link">
                 <i class="fe fe-folder fe-16"></i>
-                <span class="ml-3 item-text">Gallery Files</span>
+                <span class="ml-3 item-text">Video & Gallery</span>
               </a>
             </li>
             <li class="nav-item">

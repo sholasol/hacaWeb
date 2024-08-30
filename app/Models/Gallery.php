@@ -12,8 +12,8 @@ class Gallery extends Model
     protected $table = 'galleries';
     protected $fillable = [
         'title','type',
-        'file', 'length',
-        'format', 'created',
+        'file', 'length','youtube',
+        'format', 'created','price',
         'published', 'physical_copy',
         'for_listening', 'free_download',
         'download_link', 'digital_sale',

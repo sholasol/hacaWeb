@@ -25,6 +25,8 @@
     <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -68,8 +70,8 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gallery</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="/" class="dropdown-item">Event Images</a>
-                        <a href="/" class="dropdown-item">Event Videos</a>
+                        <a href="/event" class="dropdown-item">Event Images</a>
+                        <a href="/video" class="dropdown-item">Event Videos</a>
                     </div>
                 </div>
                 <a href="/contact" class="nav-item nav-link">Contact</a>

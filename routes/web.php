@@ -22,6 +22,8 @@ Route::get('/about', [FrontController::class, 'about'])->name('about');
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/docs', [FrontController::class, 'docs'])->name('docs');
 Route::get('/event', [FrontController::class, 'event'])->name('event');
+Route::get('/video', [FrontController::class, 'video'])->name('video');
+Route::get('/eventShow/{id}', [FrontController::class, 'show'])->name('event.detail');
 Route::get('/gallery', [FrontController::class, 'gallery'])->name('gallery');
 Route::get('/news', [FrontController::class, 'news'])->name('news');
 Route::get('/register', [FrontController::class, 'register'])->name('register');
@@ -69,6 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('edit.event');
     Route::post('/createEvent', [EventController::class, 'store'])->name('createEvent');
     Route::put('/updateEvent/{event}', [EventController::class, 'update'])->name('event.update');
+    Route::get('/delEvent/{event}', [EventController::class, 'destroy'])->name('delEvent');
 
     //document
     Route::get('/documents',[DocumentController::class, 'index'])->name('documents');
@@ -80,7 +83,8 @@ Route::middleware('auth')->group(function () {
 
     //gallery
     Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
-    Route::get('/create_gallery', [GalleryController::class, 'create'])->name('createGallery');
+    Route::get('/create_gallery', [GalleryController::class, 'create'])->name('create.gallery');
+    Route::post('/createGallery', [GalleryController::class, 'store'])->name('createGallery');
     Route::get('/edit_gallery/{gallery}/edit', [GalleryController::class, 'edit'])->name('edit.gallery');
     Route::put('/updateGallery/{gallery}', [GalleryController::class, 'update'])->name('updateGallery');
 

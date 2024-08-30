@@ -42,8 +42,9 @@
                       <span class="text-muted sr-only">Action</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
+                      {{-- <a class="dropdown-item" href="/eventShow/{{$event->id}}/edit">Show</a> --}}
                       <a class="dropdown-item" href="/event/{{$event->id}}/edit">Edit</a>
-                      <a class="dropdown-item" href="#">Delete</a>
+                      <a class="dropdown-item" href="/delEvent/{{$event->id}}">Delete</a>
                     </div>
                   </td>
                 </tr>

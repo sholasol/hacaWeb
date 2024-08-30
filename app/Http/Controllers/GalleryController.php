@@ -29,56 +29,62 @@ class GalleryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'file' => 'required|url', // Ensure that the file is a valid URL
-            'type' => 'nullable|string',
-            'length' => 'nullable|integer',
-            'format' => 'nullable|string',
-            'created' => 'nullable|date',
-            'published' => 'nullable|date',
-            'physical_copy' => 'nullable|boolean',
-            'for_listening' => 'nullable|boolean',
-            'free_download' => 'nullable|boolean',
-            'download_link' => 'nullable|url',
-            'digital_sale' => 'nullable|boolean',
-            'digital_formats' => 'nullable|string|in:mp4,Blu-Ray',
-            'sales_link' => 'nullable|url',
-            'description' => 'nullable|string',
-        ]);
+{
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,flv,mp3,wav,ogg|max:20000', // Add more mime types if needed
+        'type' => 'nullable|string',
+        'length' => 'nullable|string',
+        'format' => 'nullable|string',
+        'created' => 'nullable|date',
+        'publish' => 'nullable|date',
+        'copy' => 'nullable|string',
+        'youtube' => 'nullable|string',
+        'listening' => 'nullable|string',
+        'download' => 'nullable|string',
+        'price' => 'nullable|numeric',
+        'description' => 'nullable|string',
+    ]);
 
-         // Upload file to Cloudinary
-         $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath(), [
-            'resource_type' => 'auto' // auto determines the resource type (image, video, audio)
-        ])->getSecurePath();
+    if ($request->hasFile('file')) {
 
-
-        $gallery = new Gallery();
-        $gallery->title = $validatedData['title'];
-        $gallery->file = $validatedData['file'];
-        $gallery->type = $validatedData['type'];
-        $gallery->length = $validatedData['length'];
-        $gallery->format = $validatedData['format'];
-        $gallery->created = $validatedData['created'];
-        $gallery->published = $validatedData['published'];
-        $gallery->physical_copy = $validatedData['physical_copy'];
-        $gallery->for_listening = $validatedData['for_listening'];
-        $gallery->free_download = $validatedData['free_download'];
-        $gallery->download_link = $validatedData['download_link'];
-        $gallery->digital_sale = $validatedData['digital_sale'];
-        $gallery->digital_formats = $validatedData['digital_formats'];
-        $gallery->sales_link = $validatedData['sales_link'];
-        $gallery->description = $validatedData['description'];
-
-        if($gallery->save()){
-            sweetalert()->success('Event created successfully');
-            return redirect('/gallery');
-        }else{
-            sweetalert()->error('Oops! Something went wrong');
+        try {
+            // Optimize and upload the file to Cloudinary
+            $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath(), [
+                'resource_type' => 'auto'
+            ])->getSecurePath();
+        } catch (\Exception $e) {
+            sweetalert()->error('Oops!'.$e->getMessage());
             return redirect()->back();
         }
+    }else{
+        $uploadedFileUrl='';
     }
+
+    $gallery = new Gallery();
+    $gallery->title = $validatedData['title'];
+    $gallery->file = $uploadedFileUrl;
+    $gallery->type = $validatedData['type'];
+    $gallery->length = $validatedData['length'];
+    $gallery->format = $validatedData['format'];
+    $gallery->created = $validatedData['created'];
+    $gallery->publish = $validatedData['publish'];
+    $gallery->copy = $validatedData['copy'];
+    $gallery->listening = $validatedData['listening'];
+    $gallery->download = $validatedData['download'];
+    $gallery->description = $validatedData['description'];
+    $gallery->price = $validatedData['price'];
+    $gallery->youtube = $validatedData['youtube'];
+
+    if ($gallery->save()) {
+        sweetalert()->success('Gallery item created successfully');
+        return redirect('/gallery');
+    } else {
+        sweetalert()->error('Oops! Something went wrong');
+        return redirect()->back();
+    }
+}
+
 
     /**
      * Display the specified resource.

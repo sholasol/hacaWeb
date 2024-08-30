@@ -30,9 +30,15 @@
             </div>
             
             <div class="form-group row">
-              <label for="features" class="col-sm-3 col-form-label">Event Image</label>
+              <label for="features" class="col-sm-3 col-form-label">Cover Image</label>
               <div class="col-sm-9">
-                <input class="form-control" name="image"  id="image" type="file">
+                <input class="form-control" name="img"  id="img" type="file">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="features" class="col-sm-3 col-form-label">Upload Images (<small>Maximum of 5</small>)</label>
+              <div class="col-sm-9">
+                <input class="form-control" name="images[]"  id="images" type="file" multiple>
               </div>
             </div>
             <div class="form-group row">

@@ -83,6 +83,14 @@ class FrontController extends Controller
         return view('front.business');
     }
 
+
+    public function base()
+    {
+        // Fetch all images from the gallery table
+        $images = Event::latest()->take(6)->get();
+        return view('front.gal', compact('images'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

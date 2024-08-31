@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Contact;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,13 @@ class DashboardController extends Controller
         $members = User::where('type', 'member')
         ->orwhere('type', 'business')->count();
 
-        return view('dashboard.index', compact('revenue', 'members'));
+        $rental = Payment::where('type', 'rental')->count();
+
+        $data = Payment::latest()->take(6)->get();
+
+        $enq = Contact::count(); //total enquiries
+
+        return view('dashboard.index', compact('revenue', 'members', 'data', 'rental', 'enq'));
     }
 
     /**

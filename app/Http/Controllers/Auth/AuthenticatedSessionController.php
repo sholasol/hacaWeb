@@ -29,13 +29,15 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $name = Auth::user()->firstname;
+        $type = Auth::user()->type;
+        flash()->success('Hi '. $name.', you are logged in successfully.');
 
-        //sweetalert()->success('Welcome, '. $name);
-        flash()->success($name. ', You are welcome.');
-
-        return redirect()->intended(route('dashboard'));
-
-        // return redirect()->intended(route('dashboard', absolute: false));
+        if($type ==='admin')
+        {
+            return redirect()->intended(route('dashboard', absolute: false));
+        }else{
+            return redirect('/');
+        }
     }
 
     /**

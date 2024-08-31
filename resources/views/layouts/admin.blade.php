@@ -58,12 +58,11 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="{{asset('admin/assets/avatars/face-1.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                <img src="{{asset('asset/image/'.auth()->user()->avatar)}}" alt="..." class="avatar-img rounded-circle">
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="/profile">Hi, {{ Auth::user()->firstname }}</a>
-              <a class="dropdown-item" href="#">Settings</a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
@@ -99,6 +98,12 @@
               <a class="nav-link" href="/rentals">
                 <i class="fe fe-layers fe-16"></i>
                 <span class="ml-3 item-text">Room Rentals</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/staff" aria-expanded="false" class="nav-link">
+                <i class="fe fe-users fe-16"></i>
+                <span class="ml-3 item-text">Staff</span>
               </a>
             </li>
             <li class="nav-item">

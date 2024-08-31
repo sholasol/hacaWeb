@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string('address');
-            $table->integer('fee');
+            $table->integer('fee')->nullable();
             $table->string('type');
             $table->string('status')->default('active');
             $table->string('postcode')->nullable();

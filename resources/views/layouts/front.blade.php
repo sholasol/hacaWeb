@@ -45,42 +45,87 @@
 
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <img src="{{asset('images/logo.jpg')}}" alt="hull afrocarrebean">
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="/" class="nav-item nav-link active">Home</a>
-                <a href="/about" class="nav-item nav-link">About</a>
-                <a href="/event" class="nav-item nav-link">Events</a>
-                <a href="/news" class="nav-item nav-link">Newsletters</a>
-                <a href="/docs" class="nav-item nav-link">Documents</a>
-                <a href="/rent" class="nav-item nav-link">Rentals</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Partners</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="/business" class="dropdown-item">Join Our Business Membership</a>
-                        {{-- <a href="/community" class="dropdown-item">Join Our Community Membership</a> --}}
+    
+    
+
+    @if (Route::has('login'))
+    @auth
+
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+            <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+                <img src="{{asset('images/logo.jpg')}}" alt="hull afrocarrebean">
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="/" class="nav-item nav-link {{request()->is('/') ? 'active' : ''}}">Home</a>
+                    <a href="/about" class="nav-item nav-link {{request()->is('about') ? 'active' : ''}}">About</a>
+                    <a href="/event" class="nav-item nav-link {{request()->is('event') ? 'active' : ''}}">Events</a>
+                    <a href="/news" class="nav-item nav-link {{request()->is('news') ? 'active' : ''}}">Newsletters</a>
+                    <a href="/docs" class="nav-item nav-link {{request()->is('docs') ? 'active' : ''}}">Documents</a>
+                    <a href="/rent" class="nav-item nav-link {{request()->is('rent') ? 'active' : ''}}">Rentals</a>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gallery</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="/event" class="dropdown-item">Event Images</a>
+                            <a href="/video" class="dropdown-item">Event Videos</a>
+                        </div>
                     </div>
+                    <a href="/contact" class="nav-item nav-link {{request()->is('contact') ? 'active' : ''}}">Contact</a>
+                    <a href="/" class="nav-item nav-link text-primary"><i class="fa fa-user ms-3"></i> {{ Auth::user()->firstname }}</a>
                 </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gallery</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="/event" class="dropdown-item">Event Images</a>
-                        <a href="/video" class="dropdown-item">Event Videos</a>
-                    </div>
-                </div>
-                <a href="/contact" class="nav-item nav-link">Contact</a>
-                <a href="/login" class="nav-item nav-link text-primary"><i class="fa fa-user ms-3"></i> Sign In</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                    <a  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="btn btn-danger py-4 px-lg-5 d-none d-lg-block">Logout<i class="fa fa-power-off ms-3"></i></a>
+                
             </div>
-            <a href="/register" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
-    <!-- Navbar End -->
+        </nav>
+    @else
+
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+            <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+                <img src="{{asset('images/logo.jpg')}}" alt="hull afrocarrebean">
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="/" class="nav-item nav-link active">Home</a>
+                    <a href="/about" class="nav-item nav-link">About</a>
+                    <a href="/event" class="nav-item nav-link">Events</a>
+                    <a href="/news" class="nav-item nav-link">Newsletters</a>
+                    <a href="/docs" class="nav-item nav-link">Documents</a>
+                    <a href="/rent" class="nav-item nav-link">Rentals</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Partners</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="/business" class="dropdown-item">Join Our Business Membership</a>
+                            {{-- <a href="/community" class="dropdown-item">Join Our Community Membership</a> --}}
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gallery</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="/event" class="dropdown-item">Event Images</a>
+                            <a href="/video" class="dropdown-item">Event Videos</a>
+                        </div>
+                    </div>
+                    <a href="/contact" class="nav-item nav-link">Contact</a>
+                    <a href="{{ route('login') }}" class="nav-item nav-link text-primary"><i class="fa fa-user ms-3"></i> Sign In</a>
+                </div>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+                @endif
+            </div>
+        </nav>
+    @endauth
+@endif
 
 
     {{$slot}}
@@ -90,7 +135,7 @@
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-3">Quick Link</h4>
                     <a class="btn btn-link" href="/about">About Us</a>
                     <a class="btn btn-link" href="/contact">Contact Us</a>
@@ -100,7 +145,7 @@
                     
                     <a class="btn btn-link" href="/register">Join Now</a>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-3">Contact</h4>
                     <p class="mb-2"><i class="fa fa-map-marker me-3"></i>25-26 Park St, Hull HU2 8RR</p>
                     <p class="mb-2"><i class="fa fa-phone me-3"></i>+447366191996</p>
@@ -112,7 +157,7 @@
                         <a class="btn btn-outline-light btn-social" href="https://www.youtube.com/@hullbameinclusive9408/featured" target="_blank"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                {{-- <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">Gallery</h4>
                     <div class="row g-2 pt-2">
                         <div class="col-4">
@@ -134,8 +179,8 @@
                             <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
+                </div> --}}
+                <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-3">Newsletter</h4>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                     <div class="position-relative mx-auto" style="max-width: 400px;">

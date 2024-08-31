@@ -30,6 +30,7 @@ Route::get('/register', [FrontController::class, 'register'])->name('register');
 Route::get('/rent', [FrontController::class, 'rent'])->name('rent');
 Route::get('/business', [FrontController::class, 'business'])->name('business');
 Route::get('/community', [FrontController::class, 'community'])->name('community');
+Route::get('/gal', [FrontController::class, 'base'])->name('gal');
 
 //payment
 Route::get('/pay/{id}', [StripeController::class, 'pay'])->name('payment');
@@ -57,6 +58,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/members', [MembersController::class, 'index'])->name('members');
     Route::get('/communities', [MembersController::class, 'communities'])->name('communities');
     Route::get('/inquiry', [MembersController::class, 'inquiry'])->name('inquiry');
+    Route::get('/staff', [MembersController::class, 'staff'])->name('staff');
+    Route::get('/create_staff', [MembersController::class, 'create'])->name('create_staff');
+    Route::post('/createStaff', [MembersController::class, 'store'])->name('createStaff');
+    Route::get('/edit_staff/{id}', [MembersController::class, 'edit'])->name('edit.staff');
+    Route::put('/updateStaff/{id}', [MembersController::class, 'update'])->name('update.staff');
+    Route::get('/viewStaff/{id}', [MembersController::class, 'show'])->name('staff.detail');
 
     //rentals
     Route::get('/rentals', [RentalController::class, 'index'])->name('rentals');

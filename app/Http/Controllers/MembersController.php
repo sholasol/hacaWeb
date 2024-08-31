@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Contact;
 use App\Models\Payment;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class MembersController extends Controller
 {
@@ -25,6 +26,14 @@ class MembersController extends Controller
         return view('members.business', compact('data'));
     }
 
+    public function staff(){
+        $data = User::where('status', 'active')
+        ->latest()
+        ->where('type', 'staff')
+        ->orwhere('type', 'admin')->get();
+        return view('members.staff', compact('data'));
+    }
+
     public function inquiry()
     {
         $data = Contact::latest()->get();
@@ -36,7 +45,7 @@ class MembersController extends Controller
      */
     public function create()
     {
-        //
+        return view('members.create_staff');
     }
 
     /**
@@ -44,7 +53,42 @@ class MembersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validated = $request->validate([
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'type' => ['required', 'string'],
+            'email' => ['required', 'string',  'unique:'.User::class],
+            'password' => ['required', 'string'],
+            'phone' => ['string', 'nullable'],
+            'address' => ['string', 'nullable'],
+            'avatar' => ['nullable'],
+        ]);
+
+
+        if ($request->hasFile('avatar')) {
+            
+            $img = $request->file('avatar');
+            $imageName = time() . '_' . $img->getClientOriginalName();
+            $imgPath = $img->storeAs('staff', $imageName);
+        }else{
+            $imgPath='';
+        }
+
+        $validated['avatar'] = $imgPath;
+        $validated['password'] = Hash::make($request->password);
+
+
+        $user = User::create($validated);
+
+        if($user){
+
+            sweetalert()->success('User created successfully');
+                return redirect('/staff');
+        }else{
+                sweetalert()->error('Oops! something went wrong');
+                return redirect()->back();
+        }
     }
 
     public function payment()
@@ -66,7 +110,8 @@ class MembersController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $staff = User::where('id', $id)->first();
+        return view('members.viewStaff', compact('staff'));
     }
 
     /**
@@ -74,7 +119,8 @@ class MembersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $staff = User::where('id', $id)->first();
+        return view('members.edit_staff', compact('staff'));
     }
 
     /**
@@ -82,7 +128,49 @@ class MembersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'type' => ['required', 'string'],
+            'email' => ['required', 'string'],
+            'phone' => ['string', 'nullable'],
+            'address' => ['string', 'nullable'],
+            'avatar' => ['nullable'],
+        ]);
+
+        
+
+        $staff = User::where('id', $id)->first();
+
+        if ($request->hasFile('avatar')) {
+
+            // Delete the old image if exists
+            if ($staff->avatar) {
+                $oldImagePath = public_path('asset/image/' . $staff->avatar);
+        
+                // Check if the file exists before attempting to delete
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $imageName = time() . '.' . $request->avatar->extension();
+            $imgPath = $request->avatar->storeAs('staff', $imageName);
+            $validated['avatar'] =  $imgPath; 
+        }
+
+
+        $user = $staff->update($validated);
+
+        if($user){
+
+            sweetalert()->success('User updated successfully');
+                return redirect('/staff');
+        }else{
+                sweetalert()->error('Oops! something went wrong');
+                return redirect()->back();
+        }
+
     }
 
     /**

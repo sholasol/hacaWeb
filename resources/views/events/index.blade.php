@@ -7,7 +7,7 @@
             <div class="col-auto">
               <a href="/create_event" class="btn btn-lg btn-primary"><span class="fe fe-plus fe-16 mr-3"></span>New</a>
             </div>
-          </div>
+         </div>
         <div class="card shadow">
           <div class="card-body">
             <!-- table -->
